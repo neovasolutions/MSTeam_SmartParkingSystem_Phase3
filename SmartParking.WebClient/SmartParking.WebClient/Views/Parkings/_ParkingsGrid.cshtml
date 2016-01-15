@@ -1,0 +1,46 @@
+﻿ @(Html.Kendo().Button()
+                    .Name("btnAddSlots")
+                    .HtmlAttributes(new { type = "button" })
+                    .Content("Add Parking")
+                    .Events(ev => ev.Click("LoadParkingAdd")))
+
+ @(Html.Kendo().Button()
+                    .Name("btnEditSlots")
+                    .HtmlAttributes(new { type = "button" })
+                    .Content("Edit Parking")
+                    .Events(ev => ev.Click("LoadParkingEdit")))
+<br /><br />
+
+@(Html.Kendo().Grid<SmartParkingSystemAPI.Models.ParkingModel>()  //Bind the grid to ViewBag.Products
+      .Name("allParkingsGrid")
+      .DataSource(dataSource => dataSource
+        .Ajax()
+        //.Model(model =>
+        //        {
+        //            model.Id(parking => parking.SlotID);
+        //            model.Field(parking => parking.SlotID).Editable(false);
+        //        })
+
+          .Read(read => read.Action("Parkings_Read", "Parkings")) // Set the action method which will return the data in JSON format
+          //.Destroy(destroy => destroy.Action("Slot_Destroy", "ParkingSlot"))
+          )
+          .Events(events => events.Change("onChangeparkingGrid"))
+      .Columns(columns =>
+      {
+          //columns.Bound(parking => parking.ParkingID);
+          columns.Bound(parking => parking.ParkingName);
+          columns.Bound(parking => parking.ParkingAddress);
+          columns.Bound(parking => parking.ParkingTemplateName);
+          columns.Bound(parking => parking.IsActive);
+          columns.Bound(parking => parking.NumberOfSlots);
+          //columns.Bound(parking => parking.Min_Latitude );
+          //columns.Bound(parking => parking.Max_Latitude );
+          //columns.Bound(parking => parking.Min_Longitude );
+          //columns.Bound(parking => parking.Max_Longitude );
+      })
+      .Pageable() // Enable paging
+      .Sortable()
+      .Selectable(selectable => selectable
+                  .Mode(GridSelectionMode.Multiple))
+      .Filterable()
+)

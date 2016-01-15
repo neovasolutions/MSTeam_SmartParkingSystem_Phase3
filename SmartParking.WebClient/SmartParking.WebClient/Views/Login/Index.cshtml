@@ -1,0 +1,31 @@
+﻿
+@model SmartParkingSystemAPI.Models.LoginModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+
+@using(Html.BeginForm("Login", "Login",FormMethod.Post,null))
+{
+<div class="text_box">
+    <div class="title">Admin login</div>
+    <div class="login_form_row">
+        <label class="login_label">@Html.LabelFor(model => model.UserName)</label>
+
+        @Html.TextBoxFor(model => model.UserName)
+
+    </div>
+    <div class="login_form_row">
+        <label class="login_label">@Html.LabelFor(model => model.Password)</label>
+        @Html.PasswordFor(model => model.Password)
+
+    </div>
+    
+    <div style="text-align:right;margin-right:30px;">
+       <input type="submit" value="login" />        
+    </div>
+
+</div>
+}
+
